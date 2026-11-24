@@ -1,0 +1,10 @@
+# Netlify settings for majoriqbal.netlify.app
+#
+# On every deploy, give every ?v=… link in index.html a new version
+# (the first 8 characters of the commit being published). Browsers,
+# WhatsApp, Facebook and Telegram then always fetch the newest images
+# and icons — nobody has to change the number by hand.
+
+[build]
+  publish = "."
+  command = "V=$(echo ${COMMIT_REF:-$(date +%s)} | cut -c1-8) && sed -i -E \"s/\\?v=[0-9A-Za-z]+/?v=$V/g\" index.html && echo \"asset version: $V\""
