@@ -84,6 +84,7 @@
   .cta:hover{filter:brightness(1.06)}
   .cta svg{width:18px;height:18px;flex:none}
   .invite{margin:var(--s5) auto 0;max-width:36em;color:var(--red);font-style:italic;font-size:clamp(16px,.6vw + 14px,19px);line-height:1.5}
+  .declare > .invite:first-child{margin-top:0}
   .invite a{color:var(--red);font-style:normal;font-weight:800;text-decoration:underline;text-underline-offset:3px}
   .invite b{font-weight:800}
   .declare.compact{padding-block:var(--s5)}
@@ -188,7 +189,7 @@
   .slide{overflow:hidden}
   .slide-head{display:grid;grid-template-columns:minmax(0,210px) minmax(0,1fr) minmax(0,210px);grid-template-areas:"logo title photo";
     gap:var(--s5);align-items:center;padding:var(--pad);border-bottom:1px solid var(--line)}
-  .slide-logo{grid-area:logo;width:100%;max-width:210px;height:auto}
+  .slide-logo{grid-area:logo;justify-self:start;width:auto;height:var(--logo-h,120px);max-width:100%;object-fit:contain}
   .slide-photo{grid-area:photo;justify-self:end;width:124px;aspect-ratio:5/6;height:auto;object-fit:cover;object-position:top;border-radius:12px;border:1px solid var(--line)}
   .slide-title{grid-area:title;text-align:center}
   .banner{margin-bottom:var(--s5);border-bottom:1px solid var(--line)}
@@ -208,11 +209,11 @@
   /* Banner: logo | title | photo only when there is room (>= 900px); otherwise logo + photo on top, title below */
   @media (max-width:899px){
     .slide-head{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"logo photo" "title title";gap:var(--s4)}
-    .slide-logo{max-width:200px}
+    .slide-logo{--logo-h:96px}
     .slide-photo{width:100px}
   }
   @media (max-width:599px){
-    .slide-logo{max-width:160px}
+    .slide-logo{--logo-h:80px}
     .slide-photo{width:84px}
   }
   @media (max-width:379px){ .slide-title .kicker{font-size:11.5px;letter-spacing:.06em} .slide-title .pos{font-size:15.5px} }
@@ -331,8 +332,6 @@
   <section class="page" id="page-declaration" aria-labelledby="t-decl">
     <div class="card slide">
       <div class="declare">
-        <p class="greet">Respected Members, Assalamu Alaikum.</p>
-        <p class="msg">Humbly declaring my candidature for the position of <strong>SVC</strong>.</p>
         <p class="invite">Please <a href="#plan">CLICK HERE</a> to review, the 2-Yr Action to know about your welfare covering <b>What, How and When:</b></p>
         <div class="cta-row">
           <a class="cta" href="#plan">
