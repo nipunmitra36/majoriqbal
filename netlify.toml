@@ -8,3 +8,10 @@
 [build]
   publish = "."
   command = "V=$(echo ${COMMIT_REF:-$(date +%s)} | cut -c1-8) && sed -i -E \"s/\\?v=[0-9A-Za-z]+/?v=$V/g\" index.html && echo \"asset version: $V\""
+
+# Clean share links (new to WhatsApp/Facebook, so they fetch a fresh preview).
+# They show the same page; the address bar keeps the short link.
+[[redirects]]
+  from = "/svc"
+  to = "/index.html"
+  status = 200
