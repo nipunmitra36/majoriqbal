@@ -44,10 +44,6 @@
 
   /* ===== Header ===== */
   header.top{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20;overflow-x:clip}
-  .top-row{position:relative;display:flex;align-items:center;justify-content:space-between;gap:var(--s3);padding-block:var(--s3)}
-  .top-row::after{content:"";position:absolute;left:50%;bottom:0;width:100vw;height:1px;background:var(--line);transform:translateX(-50%)}
-  .top-row img.logo{height:34px;width:auto}
-  .top-row .tag{font-size:12px;font-weight:700;letter-spacing:.08em;color:var(--red);text-transform:uppercase;white-space:nowrap}
   nav.tabs{display:flex;overflow-x:auto;scrollbar-width:none;margin-inline:calc(var(--s2) * -1)}
   nav.tabs::-webkit-scrollbar{display:none}
   nav.tabs a{flex:1 0 auto;text-align:center;text-decoration:none;color:var(--muted);font-weight:600;font-size:15px;
@@ -128,8 +124,8 @@
     font:inherit;font-size:14px;font-weight:600;line-height:1.4;padding:8px 14px;border-radius:999px;cursor:pointer;white-space:nowrap}
   .subtabs button:hover{border-color:var(--navy)}
   .subtabs button .n{color:var(--muted);margin-right:6px}
-  .subtabs button[aria-selected="true"]{background:var(--navy);color:#fff;border-color:var(--navy)}
-  .subtabs button[aria-selected="true"] .n{color:#c9ccf2}
+  .subtabs button[aria-current="true"]{background:var(--navy);color:#fff;border-color:var(--navy)}
+  .subtabs button[aria-current="true"] .n{color:#c9ccf2}
   .subtabs button:focus-visible,.pager button:focus-visible{outline:2px solid var(--navy);outline-offset:2px}
 
   /* Section tabs: sticky horizontal strip on phones/tablets, sticky left sidebar on desktop */
@@ -152,7 +148,7 @@
       padding:10px var(--s3);background:transparent;font-size:14.5px}
     .subtabs button .n{flex:none;min-width:1.5em;margin:0}
     .subtabs button:hover{background:var(--navy-soft)}
-    .subtabs button[aria-selected="true"]{background:var(--navy);color:#fff}
+    .subtabs button[aria-current="true"]{background:var(--navy);color:#fff}
   }
   @media (min-width:1024px){ .plan-layout{grid-template-columns:250px minmax(0,1fr);gap:var(--s6)} }
 
@@ -162,30 +158,80 @@
   .group-title .num{flex:none;width:40px;height:40px;border-radius:10px;background:var(--navy);color:#fff;display:grid;place-items:center;font-weight:800}
   .group-title h2{font-size:clamp(18px,1vw + 14px,22px);line-height:1.3;color:var(--navy)}
 
+  .plan-group{scroll-margin-top:var(--hdr)}
+  .plan-group + .plan-group{margin-top:var(--s6)}
   .items{display:flex;flex-direction:column;gap:var(--gap)}
-  .item{padding:var(--pad);display:grid;grid-template-columns:44px minmax(0,1fr) auto;grid-template-areas:"id body when";
-    column-gap:var(--s4);row-gap:var(--s3);align-items:start}
-  .item .id{grid-area:id;font-weight:800;color:var(--navy);font-size:15px;line-height:1.6}
-  .item .body{grid-area:body}
-  .item h3{font-size:17px;line-height:1.4;color:var(--ink)}
-  .item .how{margin-top:var(--s2);color:var(--body);max-width:72ch}
-  .item .how p + p,.item .how ul + p,.item .how p + ul{margin-top:var(--s2)}
-  .item .how ul{padding-left:20px}
-  .item .how li + li{margin-top:var(--s1)}
-  .label{display:block;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:var(--s4) 0 var(--s1)}
-  .when{grid-area:when;text-align:right;line-height:1.3}
+  .item{padding:var(--pad)}
+  .item-head{display:grid;grid-template-columns:44px minmax(0,1fr) auto;grid-template-areas:"id what when";
+    column-gap:var(--s4);row-gap:var(--s2);align-items:start}
+  .item .id{grid-area:id;font-weight:800;color:var(--navy);font-size:15px;line-height:1.55}
+  .item h3{grid-area:what;font-size:17px;line-height:1.45;color:var(--ink)}
+  .k{font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-right:6px;white-space:nowrap}
+  .item h3 .k{position:relative;top:-1px}
+  .when{grid-area:when;display:flex;align-items:center;flex-wrap:wrap;justify-content:flex-end;gap:2px 0;text-align:right;line-height:1.3}
   .when b{display:inline-block;background:var(--red-soft);color:var(--red);font-size:13px;font-weight:700;padding:5px 10px;border-radius:8px;white-space:nowrap}
-  .when i{display:block;font-size:12px;color:var(--muted);margin-top:var(--s1);font-style:normal;white-space:nowrap}
+  .when i{flex-basis:100%;font-size:12px;color:var(--muted);margin-top:var(--s1);font-style:normal;white-space:nowrap}
+  .item-body{margin-left:calc(44px + var(--s4));max-width:72ch;color:var(--body)}
+  .what-detail{margin-top:var(--s3)}
+  .how{margin-top:var(--s3)}
+  .how > .k{display:block;margin-bottom:var(--s1)}
+  .item-body ul{padding-left:20px}
+  .item-body li + li{margin-top:var(--s1)}
+  .how p + p,.how ul + p,.how p + ul{margin-top:var(--s2)}
+  .item-body a{color:var(--navy);font-weight:700;overflow-wrap:anywhere}
+  .note{background:var(--navy-soft);color:var(--navy-ink);border-radius:10px;padding:10px 14px;font-size:14.5px}
   .hl{color:var(--red);font-weight:600}
-  .timeline .item{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"body when";align-items:center}
-  .timeline .item h3{grid-area:body;font-weight:500}
+  .timeline .item-head{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"what when";align-items:center}
+  .timeline .item h3{font-weight:500}
 
-  .pager{display:grid;grid-template-columns:1fr 1fr;gap:var(--s3);margin-top:var(--s2)}
-  .pager button{border:1px solid var(--line);background:#fff;font:inherit;font-size:15px;font-weight:600;color:var(--navy);
-    padding:var(--s3) var(--s4);border-radius:12px;cursor:pointer;text-align:left;line-height:1.4}
-  .pager button.next{text-align:right;grid-column:2}
-  .pager button small{display:block;color:var(--muted);font-weight:500;font-size:12px}
-  .pager button[hidden]{display:none}
+  /* ===== Declaration slide ===== */
+  .slide{overflow:hidden}
+  .slide-head{display:grid;grid-template-columns:minmax(0,210px) minmax(0,1fr) minmax(0,210px);grid-template-areas:"logo title photo";
+    gap:var(--s5);align-items:center;padding:var(--pad);border-bottom:1px solid var(--line)}
+  .slide-logo{grid-area:logo;width:100%;max-width:210px;height:auto}
+  .slide-photo{grid-area:photo;justify-self:end;width:124px;aspect-ratio:5/6;height:auto;object-fit:cover;object-position:top;border-radius:12px;border:1px solid var(--line)}
+  .slide-title{grid-area:title;text-align:center}
+  .banner{margin-bottom:var(--s5);border-bottom:1px solid var(--line)}
+  .slide-title .kicker{font-weight:700;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+  .slide-title .pos{margin-top:var(--s1);font-size:clamp(16px,.8vw + 12px,19px);line-height:1.3;font-weight:800;color:var(--navy)}
+  .slide-title .who{margin-top:var(--s2);font-size:clamp(21px,1.4vw + 14px,27px);line-height:1.2;font-weight:800;color:var(--ink)}
+  .slide-title .ids{margin-top:2px;font-size:14px;font-weight:600;color:var(--muted)}
+  .slide .declare{padding:var(--s6) var(--pad)}
+  .slide .declare .greet{margin-top:0}
+  .cta-row{display:flex;flex-direction:column;align-items:center;gap:var(--s3);margin-top:var(--s5)}
+  .cta-row .cta{margin-top:0;min-width:290px}
+  .cta.alt{background:#fff;color:var(--navy);border:2px solid var(--navy);box-shadow:none}
+  .cta.alt:hover{background:var(--navy-soft);filter:none}
+  .slide-dates{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line);background:#fbfbfe}
+  .slide-dates .date + .date{border-left:1px solid var(--line)}
+
+  /* Banner: logo | title | photo only when there is room (>= 900px); otherwise logo + photo on top, title below */
+  @media (max-width:899px){
+    .slide-head{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"logo photo" "title title";gap:var(--s4)}
+    .slide-logo{max-width:200px}
+    .slide-photo{width:100px}
+  }
+  @media (max-width:599px){
+    .slide-logo{max-width:160px}
+    .slide-photo{width:84px}
+  }
+  @media (max-width:379px){ .slide-title .kicker{font-size:11.5px;letter-spacing:.06em} .slide-title .pos{font-size:15.5px} }
+
+  /* ===== Up / down arrows ===== */
+  .scroll-nav{position:fixed;right:max(16px,env(safe-area-inset-right));bottom:max(16px,env(safe-area-inset-bottom));
+    display:flex;flex-direction:column;gap:var(--s2);z-index:30}
+  .scroll-nav button{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:#fff;color:var(--navy);
+    box-shadow:0 4px 14px rgba(20,24,60,.14);display:grid;place-items:center;cursor:pointer;transition:opacity .2s,background .2s}
+  .scroll-nav button:hover:not([disabled]){background:var(--navy);color:#fff}
+  .scroll-nav button[disabled]{opacity:.35;cursor:default}
+  .scroll-nav button:focus-visible{outline:2px solid var(--navy);outline-offset:2px}
+  .scroll-nav svg{width:20px;height:20px}
+  /* where the arrows would sit on top of content: show them while scrolling, fade out when idle */
+  @media (max-width:1099px){
+    .scroll-nav{opacity:0;pointer-events:none;transform:translateY(8px);transition:opacity .25s,transform .25s}
+    .scroll-nav.show{opacity:1;pointer-events:auto;transform:none}
+  }
+  @media (max-width:599px){ .scroll-nav button{width:42px;height:42px} }
 
   /* ===== Footer ===== */
   footer{border-top:1px solid var(--line);background:#fff;padding-block:var(--s5);text-align:center;color:var(--muted);font-size:14px;line-height:1.7}
@@ -194,14 +240,10 @@
   footer span{display:inline-block}
 
   /* ===== Tablet (600–899) ===== */
-  @media (max-width:899px){
-  }
 
   /* ===== Phone (< 600) ===== */
   @media (max-width:599px){
     body{font-size:15.5px}
-    .top-row img.logo{height:30px}
-    .top-row .tag{font-size:11px}
     nav.tabs a{font-size:14px;padding:10px 6px}
 
     .hero{grid-template-columns:1fr;justify-items:center;text-align:center;gap:var(--s4)}
@@ -218,28 +260,31 @@
     .ec .yr{justify-self:start;font-size:16px}
 
     .subtabs button{font-size:13.5px;padding:8px 14px;min-height:42px}
-    .pager button{min-height:48px}
 
     .group-title .num{width:34px;height:34px;font-size:15px}
-    .item{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"id when" "body body";column-gap:var(--s3);
-      padding-top:var(--s4)}
+    .item{padding-top:var(--s4)}
+    .item-head{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"id when" "what what";column-gap:var(--s3)}
     .item .id{align-self:center;font-size:14px;color:var(--muted)}
     .item h3{font-size:16.5px}
-    .item .how ul{padding-left:18px}
-    .when{align-self:center;display:flex;flex-direction:row-reverse;align-items:center;gap:var(--s2)}
+    .item-body{margin-left:0}
+    .item-body ul{padding-left:18px}
+    .when{align-self:center;flex-wrap:nowrap}
     .when b{font-size:12.5px;padding:4px 9px}
-    .when i{margin:0;font-size:11.5px}
-    .timeline .item{grid-template-areas:"body when";column-gap:var(--s3)}
+    .when i{flex-basis:auto;order:-1;margin:0 6px 0 0;font-size:11.5px}
+    .timeline .item-head{grid-template-areas:"what when"}
     .timeline .item h3{font-size:15.5px}
     .timeline .when{flex-direction:column;align-items:flex-end}
 
-    .pager button{font-size:14px;padding:10px 12px}
+    .slide .declare{padding-block:var(--s5)}
+    .cta-row .cta{min-width:0;width:100%}
+    .slide-dates{grid-template-columns:1fr}
+    .slide-dates .date + .date{border-left:0;border-top:1px solid var(--line)}
+    footer{padding-bottom:120px}
 
     footer span{display:block}
     footer .sep,footer br{display:none}
   }
   @media (max-width:359px){
-    .top-row .tag{display:none}
     .fact{padding-inline:var(--s3)}
   }
 
@@ -247,11 +292,10 @@
   @media (max-height:500px) and (max-width:1023px){
     header.top{position:static}
     .subtabs{top:0 !important}
-    .top-row{padding-block:var(--s2)}
   }
 
   @media print{
-    header.top,.subtabs,.pager,.cta{display:none}
+    header.top,.subtabs,.scroll-nav,.cta{display:none}
     section.page,.plan-group{display:block!important}
     .card{box-shadow:none;break-inside:avoid;margin-bottom:12px}
   }
@@ -261,10 +305,6 @@
 
 <header class="top">
   <div class="wrap">
-    <div class="top-row">
-      <img class="logo" src="Picture2.png" alt="RAOWA — Retired Armed Forces Officers' Welfare Association">
-      <span class="tag">Candidate for SVC</span>
-    </div>
     <nav class="tabs" role="tablist" aria-label="Main sections">
       <a href="#declaration" role="tab" data-page="declaration">Declaration</a>
       <a href="#profile" role="tab" data-page="profile">Profile</a>
@@ -275,59 +315,55 @@
 
 <main class="wrap">
 
+  <!-- ========== COMMON BANNER (shown on every tab) ========== -->
+  <div class="card slide-head banner">
+    <img class="slide-logo" src="Picture2.png" alt="RAOWA — Retired Armed Forces Officers' Welfare Association">
+    <div class="slide-title">
+      <p class="kicker" id="t-decl">Declaration of Candidature</p>
+      <p class="pos">For Senior Vice Chairman (SVC)</p>
+      <p class="who">Maj ATKM Iqbal</p>
+      <p class="ids">(BA 3268 16 LC RAOWA 2491)</p>
+    </div>
+    <img class="slide-photo" src="profile.png" alt="Portrait of Maj ATKM Iqbal">
+  </div>
+
   <!-- ========== DECLARATION ========== -->
   <section class="page" id="page-declaration" aria-labelledby="t-decl">
-    <div class="card hero">
-      <img class="photo" src="profile.png" alt="Portrait of Maj ATKM Iqbal">
-      <div>
-        <span class="eyebrow">Declaration of Candidature</span>
-        <h1 id="t-decl">Maj ATKM Iqbal</h1>
-        <div class="ids">BA 3268 · 16 LC · RAOWA No. 2491</div>
-        <div class="chips">
-          <span class="chip">Senior Vice Chairman (SVC)</span>
-          <span class="chip">Sigs</span>
+    <div class="card slide">
+      <div class="declare">
+        <p class="greet">Respected Members, Assalamu Alaikum.</p>
+        <p class="msg">Humbly declaring my candidature for the position of <strong>SVC</strong>.</p>
+        <p class="invite">Please <a href="#plan">CLICK HERE</a> to review, the 2-Yr Action to know about your welfare covering <b>What, How and When:</b></p>
+        <div class="cta-row">
+          <a class="cta" href="#plan">
+            CLICK HERE
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a class="cta alt" href="#profile">
+            Candidate’s Profile
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
         </div>
       </div>
-    </div>
 
-    <div class="card declare">
-      <h2>Declaration of Candidature</h2>
-      <p class="pos">For Senior Vice Chairman (SVC)</p>
-      <p class="greet">Respected Members, Assalamu Alaikum.</p>
-      <p class="msg">Humbly declaring my candidature for the position of <strong>SVC</strong>.</p>
-      <p class="invite">Please <a href="#plan">CLICK HERE</a> to review, the 2-Yr Action to know about your welfare covering <b>What, How and When:</b></p>
-      <a class="cta" href="#plan">
-        CLICK HERE
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-      </a>
-    </div>
-
-    <div class="dates">
-      <div class="card date">
-        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div>
-        <div><small>Start Date</small><strong>25 November 2026</strong></div>
-      </div>
-      <div class="card date">
-        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M9 16l2 2 4-4"/></svg></div>
-        <div><small>Closing Date</small><strong>27 December 2026</strong></div>
+      <div class="slide-dates">
+        <div class="date">
+          <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div>
+          <div><small>Start Date</small><strong>25 November 2026</strong></div>
+        </div>
+        <div class="date">
+          <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M9 16l2 2 4-4"/></svg></div>
+          <div><small>Closing Date</small><strong>27 December 2026</strong></div>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- ========== PROFILE ========== -->
   <section class="page" id="page-profile" aria-labelledby="t-prof">
-    <div class="card hero">
-      <img class="photo" src="profile.png" alt="Portrait of Maj ATKM Iqbal">
-      <div>
-        <span class="eyebrow">Candidate’s Profile</span>
-        <h1 id="t-prof">Maj ATKM Iqbal</h1>
-        <div class="ids">1. Candidate for the Position of: <span class="pos-red nowrap">Senior Vice Chairman (SVC)</span></div>
-        <div class="chips">
-          <span class="chip">BA 3268</span>
-          <span class="chip">16 LC</span>
-          <span class="chip">RAOWA No. 2491</span>
-        </div>
-      </div>
+    <div class="plan-head">
+      <h1 id="t-prof">Candidate’s Profile</h1>
+      <p>1. Candidate for the Position of: <span class="pos-red nowrap">Senior Vice Chairman (SVC)</span></p>
     </div>
 
     <div class="card facts">
@@ -387,14 +423,12 @@
   <!-- ========== ACTION PLAN ========== -->
   <section class="page" id="page-plan" aria-labelledby="t-plan">
     <div class="plan-head">
-      <span class="eyebrow">Candidate for SVC</span>
       <h1 id="t-plan">2-Yr Action Plan</h1>
-      <p><span class="nowrap">Maj ATKM Iqbal</span> <span class="nowrap">(BA 3268, 16 LC, RAOWA No. 2491)</span></p>
       <div class="legend"><span>What</span><span>How</span><span>When</span></div>
     </div>
 
     <div class="plan-layout" id="plan-layout">
-      <div class="subtabs" role="tablist" aria-label="Action plan sections" aria-orientation="vertical" id="subtabs"></div>
+      <nav class="subtabs" aria-label="Action plan sections" id="subtabs"></nav>
       <div id="groups"></div>
     </div>
   </section>
@@ -407,6 +441,11 @@
     <span>Start: 25 November 2026</span><i class="sep"> · </i><span>Closing: 27 December 2026</span>
   </div>
 </footer>
+
+<div class="scroll-nav" aria-label="Page scroll">
+  <button type="button" id="go-up" aria-label="Scroll up to top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg></button>
+  <button type="button" id="go-down" aria-label="Scroll down to bottom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+</div>
 
 <script>
 /* ---------- Action plan content ---------- */
@@ -440,14 +479,14 @@ const PLAN = [
     { id:"3.1", what:"Smart Service Delivery and Elimination of Bureaucracy", when:"Month 6", how:`
       <p>Contract a third-party vendor via a tri-service committee to deploy an all-in-one always accessible <span class="hl">digital platform for all RAOWA Svcs</span> (membership, hall/guest house bookings, medical/emergency grants, dental appointments, ambulance, CMH medicine collection &amp; home delivery, airport pickup/drop to RAOWA Guest House for expatriate members, and feedback/grievance registration with assured EC response within 3 working days).</p>` },
     { id:"3.2", what:"24/7 Help Desk", when:"Month 6", how:`
-      <p>Contract a third-party security svc (such as Elite Force or G4S with retired Police Offrs on the team) for emergency <span class="hl">response and rescuing Offrs from untoward incidents under a policy.</span></p>` },
+      <p>Contract a third-party security service (such as Elite Force, G4S, Max Secure, or ISSL with quick-response capabilities and civil-military influence) under a formal policy to provide <span class="hl">emergency response and rescue officers from untoward incidents.</span></p>` },
     { id:"3.3", what:"Access Control", when:"Month 6", how:`
       <p>Digital Access Control for Security and Accountability</p>` }
   ]},
   { n:"4", short:"Targeted Welfare", title:"Targeted Welfare and Ownership", items:[
     { id:"4.1", what:"Vulnerable Group Care", when:"Month 3", how:`
       <p>Build a <span class="hl">live database for dedicated staff to monitor</span> (widows, widowers, injured veterans, special children, critical cases) for CMH transport, medicine/food delivery, priority parking/seating, and complimentary event passes within the RAOWA complex.</p>` },
-    { id:"4.2", what:"Housing Scheme for plot/flat Deprived Offrs", when:"Month 12", note:"Under 5-Yr Plan", how:`
+    { id:"4.2", what:"Housing Scheme for plot/flat Deprived Offrs (under 5 yr plan)", when:"Month 12", how:`
       <p>Compile a tri-service database of <span class="hl">plot/flat-deprived Offrs</span><br>commission an independent feasibility study and coordinate with Service HQs for fund mobilization and <strong>land acquisition</strong> through joint RAOWA and member contributions.</p>` },
     { id:"4.3", what:"Service HQs Welfare Advocacy (benefits, pensions and other legitimate petitions)", when:"Ongoing", how:`
       <p>Form a dedicated team (Chairman, VC Navy, VC Air, and Advisory Committee) to pursue <span class="hl">deprived Offrs' benefits and unresolved issues with Service HQs</span>.</p>` },
@@ -458,21 +497,24 @@ const PLAN = [
     { id:"4.6", what:"Employment Opportunities", when:"Ongoing", how:`
       <p>Maintain <span class="hl">continuous corporate outreach</span> to secure job placements for members and their dependents.</p>
       <p>Through <span class="hl">RAOWA expansion and other business initiatives of RAOWA</span></p>` },
-    { id:"4.7", what:"Member Ownership & Business Cards", when:"Ongoing", how:`
-      <p>Design and issue official <span class="hl">RAOWA-branded business cards</span> (listing RAOWA as the business address) <span class="hl">to all general members with their personal information.</span></p>` },
+    { id:"4.7", what:"Member Business Cards, Yr Diary & Calendar", when:"Ongoing", how:`
+      <p>Design and issue official <span class="hl">RAOWA-branded business cards</span> (listing RAOWA as the official address) featuring each general member's personal details, alongside an <span class="hl">annual RAOWA Yr Diary and Calendar</span>.</p>` },
     { id:"4.8", what:"Official RAOWA WhatsApp Groups", when:"Month 2", how:`
       <p>Establish verified administrative WhatsApp groups displaying each member's Name, Course, and updated Rank for official updates and constructive opinion exchange.</p>` },
     { id:"4.9", what:"Outstation & Global Member Connectivity", when:"Month 6", note:"Quarterly", how:`
       <p>Host <span class="hl">quarterly online meeting for members unable to visit RAOWA</span> (living abroad, outside Dhaka, and sick at home) to gather feedback and discuss club issues.</p>` },
-    { id:"4.10", what:"RAOWA Guest Room and pickup-drop svc from Airport to RAOWA", when:"Month 3", how:`
-      <p>Under a policy utilizing RAOWA resources and facilities provide <span class="hl">airport – RAOWA Guest House Pickup-drop svc</span>.</p>` },
+    { id:"4.10", what:"RAOWA Guest House/Accn & Airport Transfer", when:"Month 3", how:`
+      <p><strong>Target Group:</strong> Out-of-station and overseas RAOWA members</p>
+      <ul><li><strong>RAOWA Guest House/Accn:</strong> Streamline room allocation and accommodation services.</li>
+      <li><strong>Air Force 3-Star Hotel (Near Falcon):</strong> Sign a service agreement for <span class="hl">discounted room rates</span>.</li>
+      <li><strong>Airport Pick-up &amp; Drop-off:</strong> Establish a policy to provide <span class="hl">airport transfers for both locations using RAOWA vehicles</span>.</li></ul>` },
     { id:"4.11", what:"Haj and Omrah", when:"Month 3", how:`
-      <p>Explore options to join the Army Sponsored Haj and Omrah Package or organize RAOWA Haj and Omrah Package with bonafied Travel Agents at best price</p>` },
+      <p>Explore options to join the Army Sponsored Haj and Omrah Package or organize RAOWA Haj and Omrah Package with bonafide Travel Agents at best price</p>` },
     { id:"4.12", what:"Student Scholarship", when:"Month 5", how:`
       <p>Yearly scholarships to 20/25 talented students. Policy and sourcing strategy shall be formalized through tri svc committee</p>` }
   ]},
   { n:"5", short:"Infrastructure", title:"Infrastructure Development, Expansion & Revenue Generation", items:[
-    { id:"5.1", what:"5-Year Infrastructure Renovation Master Plan & Members’ Facilities:", when:"Month 8", how:`
+    { id:"5.1", what:"5-Year Infrastructure Renovation Master Plan & Members’ Facilities:", when:"Month 8", whatDetail:`
       <ul><li>Internal and external space &amp; circulation optimization and parking improvement</li>
       <li>Exterior &amp; interior aesthetics</li>
       <li><strong class="hl">World Class Large Members’ Lounge:</strong> A world-class, grand facility designed to host large formal gatherings while offering private, comfortable zones for officers across all seniority and age groups for daylong relax alone or in groups. Furnished with luxurious seating, internet, large-screen TVs, and accessible charging stations. Thoughtfully zoned with exclusive social areas, a dedicated café service, a formal guest reception, and modern washrooms to ensure supreme comfort, privacy, and seamless hospitality in military environment.</li>
@@ -482,16 +524,14 @@ const PLAN = [
       <li>Hall Modernization with Soundproofing and Modernizing Washrooms</li>
       <li>Staff Accommodations and Cook House</li>
       <li>Laundry svc</li>
-      <li>Additional Upgrades Suggested by Members</li></ul>
-      <span class="label">How</span>
+      <li>Additional Upgrades Suggested by Members</li></ul>`, how:`
       <p>Engage a <strong class="hl">Hospitality Architect</strong> <span class="hl">to design and execute the comprehensive renovation master plan</span>.</p>
       <p>Table the previously approved infrastructure plan for review</p>
       <p>Incorporate the <span class="hl">previously approved plan</span> within overall renovation/master plans.</p>` },
-    { id:"5.2", what:"Expansion of RAOWA Facilities:", when:"Month 12", note:"Under 5-Yr Plan", how:`
+    { id:"5.2", what:"Expansion of RAOWA Facilities:", when:"Month 12", note:"Under 5-Yr Plan", whatDetail:`
       <ul><li><strong>Mirpur, Savar &amp; other DOHS:</strong> Full health clubs with swimming pool, gym, and cafeteria.</li>
       <li><strong>Jolshiri:</strong> Full modern RAOWA facility</li>
-      <li><strong>RAOWA Retirement Home / Resort</strong></li></ul>
-      <span class="label">How</span>
+      <li><strong>RAOWA Retirement Home / Resort</strong></li></ul>`, how:`
       <p>Form an independent committee to submit a <span class="hl">land acquisition plan, budget, and sourcing strategy</span> for <strong>General Body</strong> approval.</p>
       <p>Feasibility assessment for a joint commercial venture under RAOWA brand for a <strong class="hl">Retirement Home/ Resort.</strong></p>` },
     { id:"5.3", what:"Asset Acquisition & Commercialization", when:"Month 6", how:`
@@ -519,7 +559,12 @@ const PLAN = [
   ]},
   { n:"8", short:"Feedback", title:"Members' Feedback, Grievances & Action Tracking", items:[
     { id:"8.1", what:"Accessible platform for members’ feedback and expressing grievances", when:"Ongoing", how:`
-      <p><span class="hl">Incorporate and implement members' views</span> using a digitally recorded log tracking every feedback submission and <span class="hl">corresponding EC’s action.</span></p>` }
+      <p><span class="hl">Incorporate and implement members' views</span> using a digitally recorded log tracking every feedback submission and <span class="hl">corresponding EC’s action.</span></p>` },
+    { id:"8.2", what:"Member Feedback & Suggestions for Future EC", when:"Now", how:`
+      <p>Please email your concerns or suggestions to <a href="mailto:memberpoint@gmail.com">memberpoint@gmail.com</a> using the format below:</p>
+      <ul><li><strong>Member Details:</strong> RAOWA No., Rank, and Name</li>
+      <li><strong>Feedback / Expectations:</strong> What you expect from RAOWA</li></ul>
+      <p class="note"><strong>Note:</strong> All submissions will be integrated into the welfare plan and displayed publicly from <strong>3 Dec 26</strong> for live progress tracking.</p>` }
   ]},
   { n:"9", short:"Second Year", title:"Second Year:", timeline:true, items:[
     { what:`<span class="hl">Consolidation of Action Plan, Fine Tune and Institutionalization</span>`, when:"Month 13-23" },
@@ -530,61 +575,117 @@ const PLAN = [
   ]}
 ];
 
-/* ---------- Render plan ---------- */
+/* ---------- Render plan: all sections one after another ---------- */
 const subtabs = document.getElementById('subtabs');
 const groups = document.getElementById('groups');
 
 function whenHTML(it){
-  if(!it.when) return '<div class="when"></div>';
-  return `<div class="when"><b>${it.when}</b>${it.note?`<i>(${it.note})</i>`:''}</div>`;
+  if(!it.when) return '';
+  return `<div class="when"><span class="k">When:</span><b>${it.when}</b>${it.note?`<i>(${it.note})</i>`:''}</div>`;
 }
 
 PLAN.forEach((g,i)=>{
   const b = document.createElement('button');
-  b.type='button'; b.setAttribute('role','tab'); b.dataset.idx=i;
+  b.type='button';
   b.innerHTML = `<span class="n">${g.n}.</span>${g.short}`;
-  b.addEventListener('click',()=>showGroup(i,true));
+  b.addEventListener('click',()=>goToGroup(i));
   subtabs.appendChild(b);
 
-  const s = document.createElement('div');
-  s.className='plan-group'; s.hidden = true; s.setAttribute('role','tabpanel');
-  const items = g.items.map(it => g.timeline
-    ? `<article class="card item"><h3>${it.what}</h3>${whenHTML(it)}</article>`
-    : `<article class="card item">
-         <div class="id">${it.id}</div>
-         <div class="body"><h3>${it.what}</h3><div class="how">${it.how}</div></div>
-         ${whenHTML(it)}
-       </article>`).join('');
-  const prev = PLAN[i-1], next = PLAN[i+1];
-  s.innerHTML = `
-    <div class="group-title"><div class="num">${g.n}</div><h2>${g.title}</h2></div>
-    <div class="items ${g.timeline?'timeline':''}">${items}</div>
-    <div class="pager">
-      <button class="prev" ${prev?'':'hidden'} data-go="${i-1}"><small>Previous</small>${prev?prev.n+'. '+prev.short:''}</button>
-      <button class="next" ${next?'':'hidden'} data-go="${i+1}"><small>Next</small>${next?next.n+'. '+next.short:''}</button>
-    </div>`;
-  s.querySelectorAll('[data-go]').forEach(btn=>btn.addEventListener('click',()=>{
-    showGroup(+btn.dataset.go,true);
-  }));
-  groups.appendChild(s);
+  const items = g.items.map(it => `
+    <article class="card item">
+      <div class="item-head">
+        ${g.timeline ? '' : `<div class="id">${it.id}</div>`}
+        <h3><span class="k">What:</span>${it.what}</h3>
+        ${whenHTML(it)}
+      </div>
+      ${g.timeline ? '' : `<div class="item-body">
+        ${it.whatDetail ? `<div class="what-detail">${it.whatDetail}</div>` : ''}
+        <div class="how"><span class="k">How:</span>${it.how}</div>
+      </div>`}
+    </article>`).join('');
+
+  const sec = document.createElement('section');
+  sec.className = 'plan-group';
+  sec.id = 'sec-' + g.n;
+  sec.setAttribute('aria-labelledby', 'h-sec-' + g.n);
+  sec.innerHTML = `
+    <div class="group-title"><div class="num">${g.n}</div><h2 id="h-sec-${g.n}">${g.title}</h2></div>
+    <div class="items ${g.timeline?'timeline':''}">${items}</div>`;
+  groups.appendChild(sec);
 });
 
-function showGroup(i,scrollTab){
-  [...subtabs.children].forEach((b,j)=>b.setAttribute('aria-selected', j===i));
-  [...groups.children].forEach((s,j)=>s.hidden = j!==i);
-  if(scrollTab){
-    const b = subtabs.children[i];
-    subtabs.scrollTo({left:b.offsetLeft - 16, behavior:'smooth'});
-    // bring the start of the newly opened section into view (below the sticky header/tabs)
-    const sideBar = matchMedia('(min-width:900px)').matches;
-    const hdrEl = document.querySelector('header.top');
-    const hdrH = getComputedStyle(hdrEl).position === 'sticky' ? hdrEl.offsetHeight : 0;
-    const offset = hdrH + (sideBar ? 16 : subtabs.offsetHeight + 8);
-    const top = groups.getBoundingClientRect().top + scrollY - offset;
-    if (scrollY > top) window.scrollTo({top, behavior:'smooth'});
-  }
+function stickyOffset(){
+  const sideBar = matchMedia('(min-width:900px)').matches;
+  const hdrEl = document.querySelector('header.top');
+  const hdrH = getComputedStyle(hdrEl).position === 'sticky' ? hdrEl.offsetHeight : 0;
+  return hdrH + (sideBar ? 16 : subtabs.offsetHeight + 8);
 }
-showGroup(0);
+
+let active = -1, lockUntil = 0, target = -1, unlockTimer;
+/* when a tab jump finishes: keep the clicked section highlighted if it is on screen
+   (short last sections can't scroll to the top), otherwise follow the reading position */
+function unlock(){
+  lockUntil = 0;
+  const r = target >= 0 ? groups.children[target].getBoundingClientRect() : null;
+  if (!(r && r.top >= 0 && r.top < innerHeight * 0.6)) spy();
+  target = -1;
+}
+function setActive(i){
+  if (i === active) return;
+  active = i;
+  [...subtabs.children].forEach((b,j)=> j===i ? b.setAttribute('aria-current','true') : b.removeAttribute('aria-current'));
+  const b = subtabs.children[i];
+  if (subtabs.scrollWidth > subtabs.clientWidth + 1) subtabs.scrollTo({left: b.offsetLeft - 16, behavior:'smooth'});
+}
+
+function goToGroup(i){
+  target = i;
+  lockUntil = Date.now() + 900;
+  clearTimeout(unlockTimer); unlockTimer = setTimeout(unlock, 900);
+  setActive(i);
+  const top = groups.children[i].getBoundingClientRect().top + scrollY - stickyOffset();
+  window.scrollTo({top, behavior:'smooth'});
+}
+
+/* highlight the section currently being read */
+function spy(){
+  if (!document.getElementById('page-plan').classList.contains('active') || Date.now() < lockUntil) return;
+  const line = stickyOffset() + 60;
+  let cur = 0;
+  [...groups.children].forEach((sec,j)=>{ if (sec.getBoundingClientRect().top <= line) cur = j; });
+  if (innerHeight + scrollY >= document.documentElement.scrollHeight - 2) cur = groups.children.length - 1;
+  setActive(cur);
+}
+
+/* up / down arrows */
+const upBtn = document.getElementById('go-up'), downBtn = document.getElementById('go-down');
+function updateArrows(){
+  upBtn.disabled = scrollY < 4;
+  downBtn.disabled = innerHeight + scrollY >= document.documentElement.scrollHeight - 4;
+}
+const scrollNav = document.querySelector('.scroll-nav');
+let hideTimer;
+function showArrows(){
+  scrollNav.classList.add('show');
+  clearTimeout(hideTimer);
+  hideTimer = setTimeout(()=> scrollNav.classList.remove('show'), 2500);
+}
+scrollNav.addEventListener('pointerenter', ()=> clearTimeout(hideTimer));
+scrollNav.addEventListener('pointerleave', showArrows);
+upBtn.addEventListener('click', ()=> window.scrollTo({top:0, behavior:'smooth'}));
+downBtn.addEventListener('click', ()=> window.scrollTo({top:document.documentElement.scrollHeight, behavior:'smooth'}));
+
+let ticking = false;
+window.addEventListener('scroll', ()=>{
+  // while a section-tab jump is still scrolling, keep the clicked tab highlighted
+  if (Date.now() < lockUntil) {
+    lockUntil = Date.now() + 200;
+    clearTimeout(unlockTimer); unlockTimer = setTimeout(unlock, 220);
+  }
+  showArrows();
+  if (ticking) return; ticking = true;
+  requestAnimationFrame(()=>{ spy(); updateArrows(); ticking = false; });
+}, {passive:true});
 
 /* ---------- Main tabs (hash routing) ---------- */
 const PAGES = ['declaration','profile','plan'];
@@ -592,14 +693,15 @@ function route(){
   const p = PAGES.includes(location.hash.slice(1)) ? location.hash.slice(1) : 'declaration';
   PAGES.forEach(id=>document.getElementById('page-'+id).classList.toggle('active', id===p));
   document.querySelectorAll('nav.tabs a').forEach(a=>a.setAttribute('aria-selected', a.dataset.page===p));
-  window.scrollTo(0,0);
+  window.scrollTo({top:0, behavior:'instant'});
+  active = -1; lockUntil = 0; spy(); updateArrows();
 }
 window.addEventListener('hashchange', route);
 route();
 
 /* keep sticky sub-tabs just below the header */
 function setHdr(){ document.documentElement.style.setProperty('--hdr', document.querySelector('header.top').offsetHeight + 'px'); }
-window.addEventListener('resize', setHdr); setHdr();
+window.addEventListener('resize', ()=>{ setHdr(); updateArrows(); }); setHdr();
 </script>
 </body>
 </html>
