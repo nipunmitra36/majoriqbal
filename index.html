@@ -749,7 +749,7 @@ const PAGES = ['declaration','highlights','profile','plan'];
 let curPage = null;
 function route(fromClick){
   const [hp, target] = location.hash.slice(1).split(':');
-  const p = PAGES.includes(hp) ? hp : 'declaration';
+  const p = PAGES.includes(hp) ? hp : 'plan';   // no / unknown hash -> open the 2-Yr Action Plan
   PAGES.forEach(id=>document.getElementById('page-'+id).classList.toggle('active', id===p));
   document.querySelectorAll('nav.tabs a').forEach(a=>a.setAttribute('aria-selected', a.dataset.page===p));
   document.querySelectorAll('.cta-list .cta').forEach((a,i)=>{
