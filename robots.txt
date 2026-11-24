@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://majoriqbal.netlify.app/sitemap.xml
