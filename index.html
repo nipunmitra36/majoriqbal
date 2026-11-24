@@ -234,7 +234,10 @@
   @media (max-width:379px){ .slide-title .kicker{font-size:11.5px;letter-spacing:.06em} .slide-title .pos{font-size:15.5px} }
 
   /* ===== Declaration buttons ===== */
+  .quick-links{margin-bottom:var(--s5)}
+  .quick-links .declare{padding:var(--s5) var(--pad)}
   .cta-list{display:grid;gap:var(--s3);max-width:540px;margin:0 auto}
+  @media (min-width:700px){ .cta-list{grid-template-columns:1fr 1fr;max-width:none} }
   .cta-list .cta{margin:0;width:100%;justify-content:space-between;text-align:left;padding:14px 18px;min-height:56px}
   .cta .pl{font-weight:600;opacity:.8}
   .cta.alt .pl{color:var(--muted);opacity:1}
@@ -367,18 +370,20 @@
     <img class="slide-photo" src="profile.png" alt="Portrait of Maj ATKM Iqbal">
   </div>
 
-  <!-- ========== DECLARATION ========== -->
-  <section class="page" id="page-declaration" aria-labelledby="t-decl">
-    <div class="card slide">
-      <div class="declare">
-        <div class="cta-list">
-          <a class="cta" href="#plan"><span><span class="pl">Pl Click:</span> Full 2-Year Welfare Plan: What, How &amp; When</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-          <a class="cta alt" href="#highlights"><span><span class="pl">Pl Click:</span> Highlights</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-          <a class="cta alt" href="#profile"><span><span class="pl">Pl Click:</span> Candidate Profile</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-          <a class="cta alt" href="#plan:item-8-2"><span><span class="pl">Pl Click:</span> Feedback &amp; Suggestions</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-        </div>
+  <!-- ========== QUICK LINKS (shown on every tab, under the banner) ========== -->
+  <nav class="card slide quick-links" aria-label="Quick links">
+    <div class="declare">
+      <div class="cta-list">
+        <a class="cta" href="#plan"><span><span class="pl">Pl Click:</span> Full 2-Year Welfare Plan: What, How &amp; When</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a class="cta alt" href="#highlights"><span><span class="pl">Pl Click:</span> Highlights</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a class="cta alt" href="#profile"><span><span class="pl">Pl Click:</span> Candidate Profile</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a class="cta alt" href="#plan:item-8-2"><span><span class="pl">Pl Click:</span> Feedback &amp; Suggestions</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       </div>
     </div>
+  </nav>
+
+  <!-- ========== DECLARATION (landing: banner + quick links only) ========== -->
+  <section class="page" id="page-declaration" aria-labelledby="t-decl">
   </section>
 
   <!-- ========== HIGHLIGHTS ========== -->
@@ -736,6 +741,11 @@ function route(){
   const p = PAGES.includes(hp) ? hp : 'declaration';
   PAGES.forEach(id=>document.getElementById('page-'+id).classList.toggle('active', id===p));
   document.querySelectorAll('nav.tabs a').forEach(a=>a.setAttribute('aria-selected', a.dataset.page===p));
+  document.querySelectorAll('.cta-list .cta').forEach((a,i)=>{
+    const current = p === 'declaration' ? i === 0 : a.getAttribute('href') === '#' + p;
+    a.classList.toggle('alt', !current);
+    current && p !== 'declaration' ? a.setAttribute('aria-current','page') : a.removeAttribute('aria-current');
+  });
   window.scrollTo({top:0, behavior:'instant'});
   active = -1; lockUntil = 0;
   const el = target && document.getElementById(target);
