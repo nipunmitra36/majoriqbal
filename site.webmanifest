@@ -1,13 +1,21 @@
 {
-  "name": "Maj ATKM Iqbal — Candidate for SVC, RAOWA",
-  "short_name": "Maj Iqbal SVC",
-  "description": "2-Year Welfare Plan for RAOWA members: What, How & When.",
+  "name": "প্রার্থিতা ঘোষণা — সিনিয়র ভাইস চেয়ারম্যান (এসভিসি)",
+  "short_name": "প্রার্থিতা ঘোষণা",
+  "description": "শ্রদ্ধেয় রাওয়া মেম্বারবৃন্দ, আসসালামু আলাইকুম। অত্যন্ত বিনয়ের সাথে এসভিসি পদে প্রার্থিতা ঘোষণা করছি। আপনাদের পরামর্শ ও সহযোগিতা একান্ত কাম্য।",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#f6f5f4",
   "theme_color": "#6B1D2F",
   "icons": [
-    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
-    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" }
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
   ]
 }
