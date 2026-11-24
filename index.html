@@ -123,41 +123,6 @@
   .legend{display:flex;justify-content:center;gap:var(--s2);margin-top:var(--s3);flex-wrap:wrap}
   .legend span{font-size:14px;font-weight:600;color:var(--muted);background:#fff;border:1px solid var(--line);padding:2px 12px;border-radius:999px}
 
-  .subtabs{display:flex;flex-wrap:wrap;gap:var(--s2);padding-block:var(--s2);position:sticky;top:var(--hdr);background:var(--bg);z-index:10}
-  .subtabs button{flex:none;border:1px solid var(--line);background:#fff;color:var(--ink);
-    font:inherit;font-size:15px;font-weight:600;line-height:1.4;padding:8px 14px;border-radius:999px;cursor:pointer;white-space:nowrap}
-  .subtabs button:hover{border-color:var(--navy)}
-  .subtabs button .n{color:var(--muted);margin-right:6px}
-  .subtabs button[aria-current="true"]{background:var(--navy);color:#fff;border-color:var(--navy)}
-  .subtabs button[aria-current="true"] .n{color:#e9c9d1}
-  .subtabs button:focus-visible,.pager button:focus-visible{outline:2px solid var(--navy);outline-offset:2px}
-
-  /* Section tabs: phones = 2-column wrapped grid (not pinned); tablets = wrapped rows (pinned); desktop = sticky left sidebar */
-  .plan-layout{display:flex;flex-direction:column;gap:var(--s2)}
-  @media (max-width:899px){
-    .subtabs button{min-height:42px}
-  }
-  @media (max-width:599px){
-    .subtabs{position:static;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s2);padding-block:0 var(--s3)}
-    .subtabs button{display:flex;align-items:center;gap:6px;width:100%;text-align:left;white-space:normal;
-      line-height:1.3;border-radius:10px;padding:8px 10px}
-    .subtabs button .n{flex:none;margin:0}
-  }
-  @media (min-width:900px){
-    .plan-layout{display:grid;grid-template-columns:230px minmax(0,1fr);gap:var(--s5);align-items:start}
-    .subtabs{flex-direction:column;flex-wrap:nowrap;gap:2px;top:calc(var(--hdr) + var(--s4));
-      padding:var(--s2);background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);
-      max-height:calc(100vh - var(--hdr) - var(--s6));overflow-y:auto}
-    .subtabs::before{content:"Sections";display:block;padding:var(--s2) var(--s3) var(--s1);font-size:12.5px;font-weight:700;
-      letter-spacing:.1em;text-transform:uppercase;color:var(--navy)}
-    .subtabs button{display:flex;gap:var(--s2);width:100%;text-align:left;white-space:normal;border:0;border-radius:10px;
-      padding:10px var(--s3);background:transparent;font-size:15.5px}
-    .subtabs button .n{flex:none;min-width:1.5em;margin:0}
-    .subtabs button:hover{background:var(--navy-soft)}
-    .subtabs button[aria-current="true"]{background:var(--navy);color:#fff}
-  }
-  @media (min-width:1024px){ .plan-layout{grid-template-columns:250px minmax(0,1fr);gap:var(--s6)} }
-
   .plan-group{display:flex;flex-direction:column;gap:var(--gap)}
   .plan-group[hidden]{display:none}
   .group-title{display:flex;gap:var(--s3);align-items:center;padding-top:var(--s1)}
@@ -243,6 +208,18 @@
   .cta.alt .pl{color:var(--muted);opacity:1}
 
   /* ===== Highlights ===== */
+  .sec-nav{display:flex;flex-wrap:wrap;gap:var(--s2)}
+  .sec-nav a{display:inline-flex;align-items:center;gap:6px;min-height:42px;padding:8px 14px;border:1px solid var(--line);border-radius:999px;
+    background:#fff;color:var(--ink);font-size:15px;font-weight:600;line-height:1.3;text-decoration:none}
+  .sec-nav a .n{color:var(--navy);font-weight:800}
+  .sec-nav a:hover{border-color:var(--navy);background:var(--navy-soft)}
+  .sec-nav a:focus-visible{outline:2px solid var(--navy);outline-offset:2px}
+  @media (max-width:599px){
+    .sec-nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+    .sec-nav a{border-radius:10px;padding:8px 10px}
+  }
+  .hl-card{scroll-margin-top:calc(var(--hdr) + 16px)}
+  .hl-card.flash{animation:flash 1.6s ease}
   .hl-list{display:flex;flex-direction:column;gap:var(--gap)}
   .hl-card{overflow:hidden}
   .hl-head{display:flex;gap:var(--s3);align-items:center;padding:var(--s3) var(--pad);background:#faf8f8;border-bottom:1px solid var(--line)}
@@ -259,7 +236,7 @@
   .hl-row.no-id{grid-template-columns:minmax(0,1fr) auto}
 
   /* ===== Up / down arrows ===== */
-  .scroll-nav{position:fixed;right:max(16px,env(safe-area-inset-right));bottom:max(16px,env(safe-area-inset-bottom));
+  .scroll-nav{position:fixed;right:max(16px,env(safe-area-inset-right));top:50%;transform:translateY(-50%);
     display:flex;flex-direction:column;gap:var(--s2);z-index:30}
   .scroll-nav button{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:#fff;color:var(--navy);
     box-shadow:0 4px 14px rgba(30,36,43,.14);display:grid;place-items:center;cursor:pointer;transition:opacity .2s,background .2s}
@@ -269,11 +246,14 @@
   .scroll-nav svg{width:20px;height:20px}
   /* where the arrows would sit on top of content: show them while scrolling, fade out when idle */
   @media (max-width:1099px){
-    .scroll-nav{opacity:0;pointer-events:none;transform:translateY(8px);transition:opacity .25s,transform .25s}
-    .scroll-nav.show{opacity:1;pointer-events:auto;transform:none}
-    main.wrap{padding-bottom:88px}  /* room so the arrows never sit on the last card */
+    .scroll-nav{opacity:.45;transition:opacity .25s}
+    .scroll-nav.show,.scroll-nav:hover,.scroll-nav:focus-within{opacity:1}
   }
-  @media (max-width:599px){ .scroll-nav button{width:42px;height:42px} }
+  @media (max-width:599px){
+    .scroll-nav{right:max(6px,env(safe-area-inset-right));gap:6px}
+    .scroll-nav button{width:40px;height:40px}
+    .scroll-nav svg{width:18px;height:18px}
+  }
 
   /* ===== Footer ===== */
   footer{border-top:1px solid var(--line);background:#fff;padding-block:var(--s5);text-align:center;color:var(--muted);font-size:14px;line-height:1.7}
@@ -301,7 +281,6 @@
     .ec{grid-template-columns:1fr;gap:var(--s3)}
     .ec .yr{justify-self:start;font-size:16px}
 
-    .subtabs button{font-size:15px}
 
     .group-title .num{width:34px;height:34px;font-size:15px}
     .item{padding-top:var(--s4)}
@@ -333,14 +312,13 @@
   /* Short screens (phone in landscape): don't pin the header, only the section tabs */
   @media (max-height:500px) and (max-width:1023px){
     header.top{position:static}
-    .subtabs{position:static}
   }
 
   /* hide injected .nl-badge element */
   .nl-badge{display:none !important;opacity:0 !important}
 
   @media print{
-    header.top,.subtabs,.scroll-nav,.cta{display:none}
+    header.top,.scroll-nav,.cta{display:none}
     section.page,.plan-group{display:block!important}
     .card{box-shadow:none;break-inside:avoid;margin-bottom:12px}
   }
@@ -393,8 +371,9 @@
   <section class="page" id="page-highlights" aria-labelledby="t-hl">
     <div class="plan-head">
       <h1 id="t-hl">Highlights</h1>
-      <p>2-Year Welfare Plan at a glance: <b>What</b> &amp; <b>When</b>. Tap any point to read the full <b>How</b>.</p>
+      <p>2-Year Welfare Plan: Tap any point &amp; read <b>What, How &amp; When</b>.</p>
     </div>
+    <nav class="sec-nav" id="sec-nav" aria-label="Plan sections"></nav>
     <div id="hl-list" class="hl-list"></div>
   </section>
 
@@ -463,20 +442,18 @@
   <section class="page" id="page-plan" aria-labelledby="t-plan">
     <div class="plan-head">
       <h1 id="t-plan">2-Yr Action Plan</h1>
-      <div class="legend"><span>What</span><span>How</span><span>When</span></div>
     </div>
 
-    <div class="plan-layout" id="plan-layout">
-      <nav class="subtabs" aria-label="Action plan sections" id="subtabs"></nav>
-      <div id="groups"></div>
-    </div>
+    <div id="groups"></div>
   </section>
 
 </main>
 
-<div class="scroll-nav" aria-label="Page scroll">
-  <button type="button" id="go-up" aria-label="Scroll up to top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg></button>
-  <button type="button" id="go-down" aria-label="Scroll down to bottom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+<div class="scroll-nav" role="group" aria-label="Page navigation">
+  <button type="button" id="go-up" title="Top" aria-label="Go to top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h12"/><path d="M6 14l6-6 6 6"/><path d="M12 8v12"/></svg></button>
+  <button type="button" id="go-prev" title="Previous" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg></button>
+  <button type="button" id="go-next" title="Next" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+  <button type="button" id="go-down" title="Bottom" aria-label="Go to bottom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 20h12"/><path d="M6 10l6 6 6-6"/><path d="M12 16V4"/></svg></button>
 </div>
 
 <script>
@@ -608,7 +585,6 @@ const PLAN = [
 ];
 
 /* ---------- Render plan: all sections one after another ---------- */
-const subtabs = document.getElementById('subtabs');
 const groups = document.getElementById('groups');
 
 function whenHTML(it){
@@ -617,12 +593,6 @@ function whenHTML(it){
 }
 
 PLAN.forEach((g,i)=>{
-  const b = document.createElement('button');
-  b.type='button';
-  b.innerHTML = `<span class="n">${g.n}.</span>${g.short}`;
-  b.addEventListener('click',()=>goToGroup(i));
-  subtabs.appendChild(b);
-
   const items = g.items.map(it => `
     <article class="card item"${g.timeline ? '' : ` id="item-${it.id.replace('.','-')}"`}>
       <div class="item-head">
@@ -646,56 +616,45 @@ PLAN.forEach((g,i)=>{
   groups.appendChild(sec);
 });
 
+/* height of the pinned header, so jumps land just below it */
 function stickyOffset(){
-  const sideBar = matchMedia('(min-width:900px)').matches;
   const hdrEl = document.querySelector('header.top');
-  const hdrH = getComputedStyle(hdrEl).position === 'sticky' ? hdrEl.offsetHeight : 0;
-  const tabsPinned = getComputedStyle(subtabs).position === 'sticky';
-  return hdrH + (sideBar || !tabsPinned ? 16 : subtabs.offsetHeight + 8);
+  return (getComputedStyle(hdrEl).position === 'sticky' ? hdrEl.offsetHeight : 0) + 16;
 }
 
-let active = -1, lockUntil = 0, target = -1, unlockTimer;
-/* when a tab jump finishes: keep the clicked section highlighted if it is on screen
-   (short last sections can't scroll to the top), otherwise follow the reading position */
-function unlock(){
-  lockUntil = 0;
-  const r = target >= 0 ? groups.children[target].getBoundingClientRect() : null;
-  if (!(r && r.top >= 0 && r.top < innerHeight * 0.6)) spy();
-  target = -1;
-}
-function setActive(i){
-  if (i === active) return;
-  active = i;
-  [...subtabs.children].forEach((b,j)=> j===i ? b.setAttribute('aria-current','true') : b.removeAttribute('aria-current'));
-  const b = subtabs.children[i];
-  if (subtabs.scrollWidth > subtabs.clientWidth + 1) subtabs.scrollTo({left: b.offsetLeft - 16, behavior:'smooth'});
-}
-
-function goToGroup(i){
-  target = i;
-  lockUntil = Date.now() + 900;
-  clearTimeout(unlockTimer); unlockTimer = setTimeout(unlock, 900);
-  setActive(i);
-  const top = groups.children[i].getBoundingClientRect().top + scrollY - stickyOffset();
-  window.scrollTo({top, behavior:'smooth'});
-}
-
-/* highlight the section currently being read */
-function spy(){
-  if (!document.getElementById('page-plan').classList.contains('active') || Date.now() < lockUntil) return;
-  const line = stickyOffset() + 60;
-  let cur = 0;
-  [...groups.children].forEach((sec,j)=>{ if (sec.getBoundingClientRect().top <= line) cur = j; });
-  if (innerHeight + scrollY >= document.documentElement.scrollHeight - 2) cur = groups.children.length - 1;
-  setActive(cur);
-}
-
-/* up / down arrows */
+/* ---------- Top / Previous / Next / Bottom ---------- */
 const upBtn = document.getElementById('go-up'), downBtn = document.getElementById('go-down');
+const prevBtn = document.getElementById('go-prev'), nextBtn = document.getElementById('go-next');
+/* the points Previous/Next step through on each page */
+const STOPS = { plan: '#page-plan .item', highlights: '#page-highlights .hl-card', profile: '#page-profile > .card, #page-profile > .section-title' };
+function stops(){
+  const p = document.querySelector('.page.active').id.replace('page-', '');
+  return STOPS[p] ? [...document.querySelectorAll(STOPS[p])].filter(el => el.offsetParent) : [];
+}
+const atBottom = () => innerHeight + scrollY >= document.documentElement.scrollHeight - 4;
+function glideTo(el){
+  window.scrollTo({top: el.getBoundingClientRect().top + scrollY - stickyOffset() - 8, behavior:'smooth'});
+}
+function step(dir){
+  const land = stickyOffset() + 8, list = stops();   // where glideTo() places a point
+  if (!list.length) return;
+  if (dir > 0) {
+    const nxt = list.find(el => el.getBoundingClientRect().top > land + 10);
+    nxt ? glideTo(nxt) : window.scrollTo({top: document.documentElement.scrollHeight, behavior:'smooth'});
+  } else {
+    const prv = list.filter(el => el.getBoundingClientRect().top < land - 10).pop();
+    prv ? glideTo(prv) : window.scrollTo({top: 0, behavior:'smooth'});
+  }
+}
 function updateArrows(){
   upBtn.disabled = scrollY < 4;
-  downBtn.disabled = innerHeight + scrollY >= document.documentElement.scrollHeight - 4;
+  downBtn.disabled = atBottom();
+  const has = stops().length > 0;
+  prevBtn.disabled = !has || scrollY < 4;
+  nextBtn.disabled = !has || atBottom();
 }
+prevBtn.addEventListener('click', ()=> step(-1));
+nextBtn.addEventListener('click', ()=> step(1));
 const scrollNav = document.querySelector('.scroll-nav');
 let hideTimer;
 function showArrows(){
@@ -710,14 +669,9 @@ downBtn.addEventListener('click', ()=> window.scrollTo({top:document.documentEle
 
 let ticking = false;
 window.addEventListener('scroll', ()=>{
-  // while a section-tab jump is still scrolling, keep the clicked tab highlighted
-  if (Date.now() < lockUntil) {
-    lockUntil = Date.now() + 200;
-    clearTimeout(unlockTimer); unlockTimer = setTimeout(unlock, 220);
-  }
   showArrows();
   if (ticking) return; ticking = true;
-  requestAnimationFrame(()=>{ spy(); updateArrows(); ticking = false; });
+  requestAnimationFrame(()=>{ updateArrows(); ticking = false; });
 }, {passive:true});
 
 /* ---------- Highlights: What + When of every point, linking to full details ---------- */
@@ -733,12 +687,18 @@ PLAN.forEach(g => {
   }).join('');
   const card = document.createElement('div');
   card.className = 'card hl-card';
+  card.id = 'hl-sec-' + g.n;
+  const link = document.createElement('a');
+  link.href = '#highlights:hl-sec-' + g.n;
+  link.innerHTML = `<span class="n">${g.n}.</span>${g.short}`;
+  document.getElementById('sec-nav').appendChild(link);
   card.innerHTML = `<div class="hl-head"><div class="num">${g.n}</div><h2>${g.title}</h2></div>${rows}`;
   hlList.appendChild(card);
 });
 
 /* ---------- Main tabs (hash routing; "#plan:item-8-2" opens the plan at that point) ---------- */
 const PAGES = ['declaration','highlights','profile','plan'];
+let curPage = null;
 function route(fromClick){
   const [hp, target] = location.hash.slice(1).split(':');
   const p = PAGES.includes(hp) ? hp : 'declaration';
@@ -749,13 +709,14 @@ function route(fromClick){
     a.classList.toggle('alt', !current);
     current && p !== 'declaration' ? a.setAttribute('aria-current','page') : a.removeAttribute('aria-current');
   });
-  window.scrollTo({top:0, behavior:'instant'});
-  active = -1; lockUntil = 0;
+  const samePage = p === curPage; curPage = p;
   const el = target && document.getElementById(target);
+  if (!(samePage && el)) window.scrollTo({top:0, behavior:'instant'});
   if (el) {
-    // deep link (e.g. Feedback -> item 8.2): go straight to that point
-    const go = () => window.scrollTo({top: el.getBoundingClientRect().top + scrollY - stickyOffset() - 8, behavior:'instant'});
-    go(); afterLayout(go);
+    // deep link (e.g. Feedback -> item 8.2, Highlights section buttons)
+    const go = how => window.scrollTo({top: el.getBoundingClientRect().top + scrollY - stickyOffset() - 8, behavior:how});
+    if (fromClick) requestAnimationFrame(()=> go('smooth'));       // tapped: glide there
+    else { go('instant'); afterLayout(()=> go('instant')); }        // opened from a link: land there
     el.classList.add('flash'); setTimeout(()=>el.classList.remove('flash'), 1600);
   } else if (fromClick && p !== 'declaration') {
     // tapped a tab / button: glide down to the content so the reader lands on it
@@ -764,7 +725,7 @@ function route(fromClick){
     const hdrH = getComputedStyle(hdrEl).position === 'sticky' ? hdrEl.offsetHeight : 0;
     requestAnimationFrame(()=> window.scrollTo({top: page.getBoundingClientRect().top + scrollY - hdrH - 12, behavior:'smooth'}));
   }
-  spy(); updateArrows();
+  updateArrows();
 }
 /* re-run a scroll once web fonts and images have loaded (they shift the layout) */
 function afterLayout(fn){
